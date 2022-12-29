@@ -16,3 +16,80 @@ img {
   display: block;
   max-width: 100%;
 }
+
+.form {
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  width: 200px;
+  height: 40px;
+
+  font-size: medium;
+  text-align: center;
+
+  margin-bottom: 50px;
+  padding: 5px;
+
+  border: 1px solid #000000;
+  border-radius: 4px;
+}
+
+button {
+  width: 100px;
+  height: 40px;
+
+  font-size: medium;
+
+  background-color: rgb(160, 253, 160);
+
+  border: 1px solid;
+  border-radius: 5px;
+
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #efeded;
+  color: #b1b1b1;
+
+  border: none;
+
+  cursor: auto;
+}
+
+.stop {
+  background-color: rgb(244, 244, 88);
+}
+
+.destroy {
+  background-color: tomato;
+}
+
+.timer {
+  display: flex;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100px;
+
+  padding: 10px 0;
+
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+}
+
+.value {
+  font-weight: 700;
+  font-size: 40px;
+}
+
+.label {
+  color: #cccccc;
+}
