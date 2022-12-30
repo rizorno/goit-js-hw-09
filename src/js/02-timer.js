@@ -43,10 +43,6 @@ const options = {
   },
 };
 
-function addLeadingZero(value) {
-  return String(value).padStart(2, '0');
-}
-
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
@@ -68,19 +64,29 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
+}
+
 class Timer {
+  timerID = null;
+  isActive = false;
+
   constructor() {
-    this.timerID = null;
-    this.isActive = false;
     refs.startBtn.disabled = true;
     stopBtn.disabled = true;
     destroyBtn.disabled = true;
   }
 
   startTimer() {
+    // Needed if the start button is not disabled
     //  if (this.isActive) {
     //    return;
     //  }
+
+    refs.startBtn.disabled = true;
+    stopBtn.disabled = false;
+    destroyBtn.disabled = false;
 
     this.isActive = true;
     this.timerID = setInterval(() => {
@@ -88,9 +94,6 @@ class Timer {
       const deltaTime = selectedTime - currentTime;
       const componentsTimer = convertMs(deltaTime);
       this.updateComponentsTimer(componentsTimer);
-      refs.startBtn.disabled = true;
-      stopBtn.disabled = false;
-      destroyBtn.disabled = false;
       if (deltaTime <= 0) {
         this.stopTimer();
       }
@@ -105,6 +108,10 @@ class Timer {
   }
 
   stopTimer() {
+    // Needed if the stop button is not disabled
+    //  if (!this.isActive) return;
+    //  this.isActive = false;
+
     clearInterval(this.timerID);
     refs.startBtn.disabled = true;
     stopBtn.disabled = true;
@@ -117,7 +124,6 @@ class Timer {
     listValue.forEach(element => {
       element.textContent = '00';
     });
-    //  refs.startBtn.disabled = true;
     stopBtn.disabled = true;
     destroyBtn.disabled = true;
   }
