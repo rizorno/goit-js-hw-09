@@ -22,7 +22,7 @@ function onSubmitForm(e) {
   let step = Number(e.currentTarget.step.value);
   let amount = Number(e.currentTarget.amount.value);
 
-  for (let position = 1; position <= amount; position += 1) {
+  for (let position = 1; position <= amount; position++) {
     createPromise(position, delay)
       .then(({ position, delay }) => {
         setTimeout(() => {
