@@ -94,13 +94,6 @@ class Timer {
       const deltaTime = selectedTime - currentTime;
       const componentsTimer = convertMs(deltaTime);
       this.updateComponentsTimer(componentsTimer);
-      if (
-        Number(refs.minutes.textContent) + Number(refs.seconds.textContent) ===
-        0
-      ) {
-        this.stopTimer();
-        destroyBtn.disabled = true;
-      }
     }, 1000);
   }
 
@@ -109,6 +102,13 @@ class Timer {
     refs.hours.textContent = hours;
     refs.minutes.textContent = minutes;
     refs.seconds.textContent = seconds;
+    if (
+      Number(days) + Number(hours) + Number(minutes) + Number(seconds) ===
+      0
+    ) {
+      this.stopTimer();
+      destroyBtn.disabled = true;
+    }
   }
 
   stopTimer() {
