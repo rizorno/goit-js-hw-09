@@ -137,7 +137,7 @@ class Timer {
     });
     pauseBtn.disabled = true;
     destroyBtn.disabled = true;
-    refs.startBtn.disabled = false;
+    refs.startBtn.disabled = true;
   }
 }
 
