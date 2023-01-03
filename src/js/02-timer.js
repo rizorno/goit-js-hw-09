@@ -16,11 +16,11 @@ const refs = {
 
 refs.startBtn.insertAdjacentHTML(
   'afterend',
-  " <button type='button' data-stop class='stop'>Stop</button>"
+  " <button type='button' data-pause class='pause'>Pause</button>"
 );
-const stopBtn = document.querySelector('[data-stop]');
+const pauseBtn = document.querySelector('[data-pause]');
 
-stopBtn.insertAdjacentHTML(
+pauseBtn.insertAdjacentHTML(
   'afterend',
   " <button type='button' data-destroy class='destroy'>Destroy</button>"
 );
@@ -32,14 +32,21 @@ const options = {
   defaultDate: Date.now(),
   minuteIncrement: 1,
 
-  onClose(selectedDates, dateStr) {
+  onClose(selectedDates) {
     if (selectedDates[0] < Date.now()) {
       Notify.failure('Please choose a date in the future');
       selectedDates[0] = new Date();
-    } else if (Number(refs.seconds.textContent) > 0) {
-      refs.startBtn.disabled = true;
-      selectedTime = selectedDates[0];
     } else {
+      refs.startBtn.disabled = false;
+      selectedTime = selectedDates[0];
+    }
+  },
+
+  onChange(selectedDates) {
+    if (selectedDates[0] < Date.now()) {
+      refs.startBtn.disabled = true;
+    } else {
+      timer.destroyTimer();
       refs.startBtn.disabled = false;
       selectedTime = selectedDates[0];
     }
@@ -77,13 +84,13 @@ class Timer {
 
   constructor() {
     refs.startBtn.disabled = true;
-    stopBtn.disabled = true;
+    pauseBtn.disabled = true;
     destroyBtn.disabled = true;
   }
 
   startTimer() {
     refs.startBtn.disabled = true;
-    stopBtn.disabled = false;
+    pauseBtn.disabled = false;
     destroyBtn.disabled = false;
 
     if (this.isActive) {
@@ -109,15 +116,15 @@ class Timer {
       Number(days) + Number(hours) + Number(minutes) + Number(seconds) ===
       0
     ) {
-      this.stopTimer();
+      this.pauseTimer();
       destroyBtn.disabled = true;
     }
   }
 
-  stopTimer() {
+  pauseTimer() {
     clearInterval(this.timerID);
-    refs.startBtn.disabled = true;
-    stopBtn.disabled = true;
+    refs.startBtn.disabled = false;
+    pauseBtn.disabled = true;
     destroyBtn.disabled = false;
   }
 
@@ -127,7 +134,7 @@ class Timer {
     listValue.forEach(element => {
       element.textContent = '00';
     });
-    stopBtn.disabled = true;
+    pauseBtn.disabled = true;
     destroyBtn.disabled = true;
     refs.startBtn.disabled = false;
   }
@@ -138,5 +145,5 @@ const timer = new Timer();
 flatpickr(refs.inputDate, options);
 
 refs.startBtn.addEventListener('click', () => timer.startTimer());
-stopBtn.addEventListener('click', () => timer.stopTimer());
+pauseBtn.addEventListener('click', () => timer.pauseTimer());
 destroyBtn.addEventListener('click', () => timer.destroyTimer());
