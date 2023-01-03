@@ -15,7 +15,7 @@ let timerId = null;
 refs.startBtn.addEventListener('click', () => {
   refs.startBtn.disabled = true;
   refs.stopBtn.disabled = false;
-  refs.stopBtn.classList.add('stop');
+  refs.stopBtn.classList.add('pause');
 
   //   refs.body.style.backgroundColor = getRandomHexColor();
   setTimeout(() => {
@@ -31,5 +31,5 @@ refs.stopBtn.addEventListener('click', () => {
   clearInterval(timerId);
   refs.startBtn.disabled = false;
   refs.stopBtn.disabled = true;
-  refs.stopBtn.classList.remove('stop');
+  refs.stopBtn.classList.remove('pause');
 });
