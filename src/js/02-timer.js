@@ -32,10 +32,13 @@ const options = {
   defaultDate: Date.now(),
   minuteIncrement: 1,
 
-  onClose(selectedDates) {
+  onClose(selectedDates, dateStr) {
     if (selectedDates[0] < Date.now()) {
       Notify.failure('Please choose a date in the future');
       selectedDates[0] = new Date();
+    } else if (Number(refs.seconds.textContent) > 0) {
+      refs.startBtn.disabled = true;
+      selectedTime = selectedDates[0];
     } else {
       refs.startBtn.disabled = false;
       selectedTime = selectedDates[0];
@@ -79,14 +82,14 @@ class Timer {
   }
 
   startTimer() {
-    // Needed if the start button is not disabled
-    //  if (this.isActive) {
-    //    return;
-    //  }
-
     refs.startBtn.disabled = true;
     stopBtn.disabled = false;
     destroyBtn.disabled = false;
+
+    if (this.isActive) {
+      clearInterval(this.timerID);
+      this.isActive = false;
+    }
 
     this.isActive = true;
     this.timerID = setInterval(() => {
@@ -112,10 +115,6 @@ class Timer {
   }
 
   stopTimer() {
-    // Needed if the stop button is not disabled
-    //  if (!this.isActive) return;
-    //  this.isActive = false;
-
     clearInterval(this.timerID);
     refs.startBtn.disabled = true;
     stopBtn.disabled = true;
@@ -130,6 +129,7 @@ class Timer {
     });
     stopBtn.disabled = true;
     destroyBtn.disabled = true;
+    refs.startBtn.disabled = false;
   }
 }
 
