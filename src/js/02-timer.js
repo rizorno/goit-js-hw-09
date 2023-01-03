@@ -118,6 +118,7 @@ class Timer {
     ) {
       this.pauseTimer();
       destroyBtn.disabled = true;
+      refs.startBtn.disabled = true;
     }
   }
 
